@@ -191,16 +191,24 @@
         }
 
 
-        function calculatePrice(distance, duration) {
-            let basePrice = 89;
-            if (distance > 10) {
-                basePrice += (distance - 10) * 0.50;
-            }
-            if ((distance / duration) * 60 < 80) { // Vitesse moyenne en km/h
-                basePrice += duration;
-            }
-            return Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
+        function calculatePrice(distance, actualDuration) {
+          let basePrice = 89;
+          if (distance > 10) {
+            basePrice += (distance - 10) * 0.80;
+          }
+        
+          // Temps de trajet attendu à 75 km/h
+          let expectedDuration = distance / 75 * 60; // Converti en minutes
+        
+          // Calculez les minutes supplémentaires, si la durée réelle est supérieure à la durée attendue
+          if (actualDuration > expectedDuration) {
+            let extraMinutes = actualDuration - expectedDuration;
+            basePrice += extraMinutes;
+          }
+        
+          return Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
         }
+
 
         function displayPrice(price) {
             document.getElementById('calculatedPrice').innerText = 'Prix estimé : ' + price + '€';
