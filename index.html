@@ -2,78 +2,126 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>P-acor Pianos - L'Art de la Musique Parfaitement Accordée</title>
-    <!-- Mettre ici les liens vers les feuilles de style CSS, les polices, et les meta tags pour SEO -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P-acor Pianos - Simon Pacor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .header, .footer {
+            background-color: #222;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            background-image: url('path-to-your-image.jpg');
+            background-size: cover;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero h1 {
+            color: white;
+            margin: 0;
+        }
+
+        .hero button {
+            background-color: bordeaux;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .section {
+            padding: 20px;
+        }
+
+        .about, .services, .pricing, .contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about img, .services img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .footer a {
+            color: bordeaux;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-
-    <!-- En-tête -->
-    <header>
+    <header class="header">
         <nav>
-            <!-- Logo P-acor Pianos -->
-            <img src="logo-pacor-pianos.png" alt="Logo P-acor Pianos">
-            <!-- Liens de Navigation -->
-            <ul>
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#apropos">À Propos</a></li>
+            <ul class="nav">
+                <li><a href="#home">Accueil</a></li>
+                <li><a href="#about">À Propos</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#tarification">Tarification</a></li>
+                <li><a href="#pricing">Tarification</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Section d'Accueil -->
-    <section id="accueil" style="background-image: url('image-piano-accueil.jpg');">
+    <section id="home" class="hero">
         <h1>Harmonisez Votre Univers Musical avec Simon Pacor</h1>
-        <button onclick="location.href='#services'">Découvrez Nos Services</button>
+        <button>Découvrez Nos Services</button>
     </section>
 
-    <!-- À Propos de Simon Pacor -->
-    <section id="apropos">
-        <img src="simon-pacor.jpg" alt="Simon Pacor">
-        <div>
-            <p>Rencontrez Simon Pacor, l'artisan de vos émotions musicales. Avec plus d'une décennie d'expérience...</p>
-        </div>
+    <section id="about" class="section about">
+        <img src="path-to-simon-image.jpg" alt="Simon Pacor">
+        <p>Rencontrez Simon Pacor, l'artisan de vos émotions musicales...</p>
     </section>
 
-    <!-- Services Offerts -->
-    <section id="services">
-        <article>
-            <h2>Accordage de Précision</h2>
-            <p>Votre piano, parfaitement harmonisé.</p>
-        </article>
-        <!-- Répéter pour chaque service -->
+    <section id="services" class="section services">
+        <img src="path-to-service-image.jpg" alt="Services">
+        <h2>Nos Services</h2>
+        <p>Accordage de Précision - Votre piano, parfaitement harmonisé.</p>
+        <!-- Add more services here -->
     </section>
 
-    <!-- Tarification et Devis -->
-    <section id="tarification">
-        <form action="submit-devis.php" method="POST">
-            <input type="text" name="adresse" placeholder="Votre Adresse">
-            <input type="submit" value="Obtenir un Devis">
-        </form>
-        <!-- Section des Témoignages -->
-        <!-- Insérer ici les témoignages -->
+    <section id="pricing" class="section pricing">
+        <h2>Tarification et Devis</h2>
+        <p>Obtenez un devis personnalisé en quelques clics...</p>
+        <!-- Insert pricing details and form here -->
     </section>
 
-    <!-- Contact et Prise de Rendez-vous -->
-    <section id="contact">
-        <form action="submit-contact.php" method="POST">
-            <input type="text" name="nom" placeholder="Votre Nom">
-            <input type="email" name="email" placeholder="Votre Email">
-            <textarea name="message" placeholder="Votre Message"></textarea>
-            <input type="submit" value="Envoyer">
-        </form>
+    <section id="contact" class="section contact">
+        <h2>Contactez-Nous</h2>
+        <!-- Insert contact form here -->
     </section>
 
-    <!-- Pied de Page -->
-    <footer>
-        <nav>
-            <!-- Répéter les Liens de Navigation -->
-        </nav>
-        <p>© P-acor Pianos</p>
-        <!-- Liens vers les réseaux sociaux -->
+    <footer class="footer">
+        <p>Suivez-nous sur les réseaux sociaux | <a href="#">Mentions Légales</a> | <a href="#contact">Contactez-Nous</a></p>
     </footer>
-
 </body>
 </html>
