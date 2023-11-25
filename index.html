@@ -192,11 +192,11 @@
 
 
         function calculatePrice(distance, duration) {
-            let basePrice = 90;
+            let basePrice = 89;
             if (distance > 10) {
                 basePrice += (distance - 10) * 0.50;
             }
-            if ((distance / duration) * 60 < 70) { // Vitesse moyenne en km/h
+            if ((distance / duration) * 60 < 50) { // Vitesse moyenne en km/h
                 basePrice += duration;
             }
             return Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
