@@ -2,155 +2,78 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P-acor Pianos - Simon Pacor</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=VotreCléAPI&libraries=places&callback=initAutocomplete" async defer></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        header, footer {
-            background-color: bordeaux;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 10px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .container {
-            width: 70%;
-            margin: 0 auto;
-            padding-top: 50px;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        #calculatedPrice {
-            font-size: 20px;
-            margin-top: 20px;
-        }
-    </style>
+    <title>P-acor Pianos - L'Art de la Musique Parfaitement Accordée</title>
+    <!-- Mettre ici les liens vers les feuilles de style CSS, les polices, et les meta tags pour SEO -->
 </head>
 <body>
+
+    <!-- En-tête -->
     <header>
-        <h1>P-acor Pianos - Simon Pacor</h1>
         <nav>
+            <!-- Logo P-acor Pianos -->
+            <img src="logo-pacor-pianos.png" alt="Logo P-acor Pianos">
+            <!-- Liens de Navigation -->
             <ul>
-                <li><a href="#about">À Propos</a></li>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">À Propos</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#pricing">Tarification</a></li>
+                <li><a href="#tarification">Tarification</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="container">
-        <h2>Calculateur de Prix pour Accord de Piano</h2>
-        <input id="address" placeholder="Entrez votre adresse" type="text" />
-        <button onclick="calculateRoutePrice()">Calculer le Prix</button>
-        <div id="calculatedPrice"></div>
-    </div>
-
-    <section id="about">
-        <h2>À Propos de Simon Pacor</h2>
-        <p>[Texte biographique]</p>
+    <!-- Section d'Accueil -->
+    <section id="accueil" style="background-image: url('image-piano-accueil.jpg');">
+        <h1>Harmonisez Votre Univers Musical avec Simon Pacor</h1>
+        <button onclick="location.href='#services'">Découvrez Nos Services</button>
     </section>
 
+    <!-- À Propos de Simon Pacor -->
+    <section id="apropos">
+        <img src="simon-pacor.jpg" alt="Simon Pacor">
+        <div>
+            <p>Rencontrez Simon Pacor, l'artisan de vos émotions musicales. Avec plus d'une décennie d'expérience...</p>
+        </div>
+    </section>
+
+    <!-- Services Offerts -->
     <section id="services">
-        <h2>Services Offerts</h2>
-        <p>[Détails des services]</p>
+        <article>
+            <h2>Accordage de Précision</h2>
+            <p>Votre piano, parfaitement harmonisé.</p>
+        </article>
+        <!-- Répéter pour chaque service -->
     </section>
-    
+
+    <!-- Tarification et Devis -->
+    <section id="tarification">
+        <form action="submit-devis.php" method="POST">
+            <input type="text" name="adresse" placeholder="Votre Adresse">
+            <input type="submit" value="Obtenir un Devis">
+        </form>
+        <!-- Section des Témoignages -->
+        <!-- Insérer ici les témoignages -->
+    </section>
+
+    <!-- Contact et Prise de Rendez-vous -->
     <section id="contact">
-        <h2>Contactez-Nous</h2>
-        <form id="contactForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
-            <label for="message">Message:</label>
-            <textarea id="message" name="message"></textarea>
+        <form action="submit-contact.php" method="POST">
+            <input type="text" name="nom" placeholder="Votre Nom">
+            <input type="email" name="email" placeholder="Votre Email">
+            <textarea name="message" placeholder="Votre Message"></textarea>
             <input type="submit" value="Envoyer">
         </form>
     </section>
-    
+
+    <!-- Pied de Page -->
     <footer>
-        <p>&copy; 2023 P-acor Pianos - Simon Pacor</p>
+        <nav>
+            <!-- Répéter les Liens de Navigation -->
+        </nav>
+        <p>© P-acor Pianos</p>
+        <!-- Liens vers les réseaux sociaux -->
     </footer>
 
-    <!-- Script JavaScript pour le calculateur de prix -->
-    <script>
-        let autocomplete;
-
-        function initAutocomplete() {
-            autocomplete = new google.maps.places.Autocomplete(
-                document.getElementById('address'), { types: ['geocode'], componentRestrictions: { country: "fr" } });
-        }
-
-        function calculateRoutePrice() {
-            let service = new google.maps.DistanceMatrixService();
-            service.getDistanceMatrix(
-                {
-                    origins: ['5 Rue Principale, 28190 Mittainvilliers-Vérigny'],
-                    destinations: [document.getElementById('address').value],
-                    travelMode: 'DRIVING',
-                    unitSystem: google.maps.UnitSystem.METRIC,
-                }, callback);
-        }
-
-        function callback(response, status) {
-            if (status == 'OK') {
-                let distance = response.rows[0].elements[0].distance.value / 1000; // en km
-                let duration = response.rows[0].elements[0].duration.value / 60; // en minutes
-
-                if (duration > 120) { // Plus de 2 heures
-                    displayCustomMessage();
-                } else {
-                    let price = calculatePrice(distance, duration);
-                    displayPrice(price);
-                }
-            } else {
-                alert("Erreur de calcul de la distance : " + status);
-            }
-        }
-
-        function displayCustomMessage() {
-            document.getElementById('calculatedPrice').innerText = 'Contactez-nous pour un devis personnalisé.';
-        }
-
-
-        function calculatePrice(distance, duration) {
-            let basePrice = 90;
-            if (distance > 10) {
-                basePrice += (distance - 10) * 0.50;
-            }
-            if ((distance / duration) * 60 < 70) { // Vitesse moyenne en km/h
-                basePrice += duration;
-            }
-            return Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
-        }
-
-        function displayPrice(price) {
-            document.getElementById('calculatedPrice').innerText = 'Prix estimé : ' + price + '€';
-        }
-    </script>
 </body>
 </html>
