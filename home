@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordeur de Piano</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCrnKIDzI_t_1e5Mm0x7cYhdy4ttZ-3y4&libraries=places&callback=initAutocomplete" async defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 70%;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        #calculatedPrice {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculateur de Prix pour Accord de Piano</h2>
+        <input id="address" placeholder="Entrez votre adresse" type="text" />
+        <button onclick="calculateRoutePrice()">Calculer le Prix</button>
+        <div id="calculatedPrice"></div>
+    </div>
+
+    <script>
+        let autocomplete;
+
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('address'), { types: ['geocode'], componentRestrictions: { country: "fr" } });
+        }
+
+        function calculateRoutePrice() {
+            let service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+                {
+                    origins: ['5 Rue Principale, 28190 Mittainvilliers-Vérigny'],
+                    destinations: [document.getElementById('address').value],
+                    travelMode: 'DRIVING',
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                }, callback);
+        }
+
+        function callback(response, status) {
+            if (status == 'OK') {
+                let distance = response.rows[0].elements[0].distance.value / 1000; // en km
+                let duration = response.rows[0].elements[0].duration.value / 60; // en minutes
+
+                if (duration > 120) { // Plus de 2 heures
+                    displayCustomMessage();
+                } else {
+                    let price = calculatePrice(distance, duration);
+                    displayPrice(price);
+                }
+            } else {
+                alert("Erreur de calcul de la distance : " + status);
+            }
+        }
+
+        function displayCustomMessage() {
+            document.getElementById('calculatedPrice').innerText = 'Contactez-nous pour un devis personnalisé.';
+        }
+
+
+        function calculatePrice(distance, duration) {
+            let basePrice = 90;
+            if (distance > 10) {
+                basePrice += (distance - 10) * 0.50;
+            }
+            if ((distance / duration) * 60 < 70) { // Vitesse moyenne en km/h
+                basePrice += duration;
+            }
+            return Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
+        }
+
+        function displayPrice(price) {
+            document.getElementById('calculatedPrice').innerText = 'Prix estimé : ' + price + '€';
+        }
+    </script>
+</body>
+</html>
