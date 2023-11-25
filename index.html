@@ -171,19 +171,14 @@
         }
 
         function callback(response, status) {
-            if (status == 'OK') {
-                let distance = response.rows[0].elements[0].distance.value / 1000; // en km
-                let duration = response.rows[0].elements[0].duration.value / 60; // en minutes
-
-                if (duration > 120) { // Plus de 2 heures
-                    displayCustomMessage();
-                } else {
-                    let price = calculatePrice(distance, duration);
-                    displayPrice(price);
-                }
-            } else {
-                alert("Erreur de calcul de la distance : " + status);
-            }
+          if (status == 'OK') {
+            let distance = response.rows[0].elements[0].distance.value / 1000; // en km
+            let duration = response.rows[0].elements[0].duration.value / 60; // en minutes
+            let priceDetails = calculatePrice(distance, duration);
+            displayPrice(priceDetails);
+          } else {
+            alert("Erreur de calcul de la distance : " + status);
+          }
         }
 
         function displayCustomMessage() {
@@ -192,27 +187,44 @@
 
 
         function calculatePrice(distance, actualDuration) {
-          let basePrice = 89;
+          let basePrice = 90;
+          let extraKmPrice = 0;
+          let extraTimePrice = 0;
+        
           if (distance > 10) {
-            basePrice += (distance - 10) * 0.80;
+            extraKmPrice = (distance - 10) * 0.50;
+            basePrice += extraKmPrice;
           }
         
-          // Temps de trajet attendu à 75 km/h
-          let expectedDuration = distance / 75 * 60; // Converti en minutes
-        
-          // Calculez les minutes supplémentaires, si la durée réelle est supérieure à la durée attendue
+          let expectedDuration = distance / 70 * 60; // Converti en minutes
           if (actualDuration > expectedDuration) {
-            let extraMinutes = actualDuration - expectedDuration;
-            basePrice += extraMinutes;
+            extraTimePrice = actualDuration - expectedDuration;
+            basePrice += extraTimePrice;
           }
         
-          return Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
+          let finalPrice = Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
+        
+          return {
+            finalPrice: finalPrice,
+            basePrice: 90,
+            extraKmPrice: extraKmPrice,
+            extraTimePrice: extraTimePrice,
+            roundedPrice: finalPrice
+          };
         }
 
-
-        function displayPrice(price) {
-            document.getElementById('calculatedPrice').innerText = 'Prix estimé : ' + price + '€';
+        function displayPrice(priceDetails) {
+          let priceBreakdown = `
+            Prix de base : ${priceDetails.basePrice}€<br>
+            Supplément pour km supplémentaires (${priceDetails.extraKmPrice / 0.50} km à 0.50€/km) : ${priceDetails.extraKmPrice}€<br>
+            Supplément pour temps supplémentaire (${priceDetails.extraTimePrice} min à 1€/min) : ${priceDetails.extraTimePrice}€<br>
+            Prix arrondi : ${priceDetails.roundedPrice}€
+          `;
+        
+          document.getElementById('calculatedPrice').innerHTML = 'Détail du prix :<br>' + priceBreakdown;
         }
+
+        
     </script>
 </body>
 </html>
