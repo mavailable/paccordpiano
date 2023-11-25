@@ -36,25 +36,31 @@
         }
 
         .hero {
-            background-image: url('path-to-your-image.jpg');
+            background-image: url('path-to-your-hero-image.jpg'); /* Assurez-vous que c'est une image foncée ou colorée */
             background-size: cover;
             text-align: center;
             padding: 50px 20px;
+            color: white; /* Garde le texte en blanc */
         }
-
+        
         .hero h1 {
-            color: white;
             margin: 0;
         }
-
+        
         .hero button {
-            background-color: bordeaux;
+            background-color: #8B0000; /* Bordeaux foncé pour plus de contraste */
             color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
             font-size: 16px;
             margin-top: 20px;
+            border-radius: 5px; /* Ajoute une légère courbure aux coins */
+            transition: background-color 0.3s ease; /* Animation pour un changement de couleur doux */
+        }
+        
+        .hero button:hover {
+            background-color: #A52A2A; /* Légèrement plus clair lorsque survolé */
         }
 
         .section {
