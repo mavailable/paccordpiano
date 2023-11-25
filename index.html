@@ -185,14 +185,13 @@
             document.getElementById('calculatedPrice').innerText = 'Contactez-nous pour un devis personnalisé.';
         }
 
-
         function calculatePrice(distance, actualDuration) {
-          let basePrice = 90;
+          let basePrice = 89; // Nouveau prix de base
           let extraKmPrice = 0;
           let extraTimePrice = 0;
         
           if (distance > 10) {
-            extraKmPrice = (distance - 10) * 0.50;
+            extraKmPrice = (distance - 10) * 0.80; // Nouveau tarif par km supplémentaire
             basePrice += extraKmPrice;
           }
         
@@ -201,6 +200,17 @@
             extraTimePrice = actualDuration - expectedDuration;
             basePrice += extraTimePrice;
           }
+        
+          let finalPrice = Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
+        
+          return {
+            finalPrice: finalPrice,
+            basePrice: 89,
+            extraKmPrice: extraKmPrice,
+            extraTimePrice: extraTimePrice,
+            roundedPrice: finalPrice
+          };
+        }
         
           let finalPrice = Math.ceil(basePrice / 10) * 10 - 1; // Arrondi supérieur finissant par 9
         
@@ -215,14 +225,18 @@
 
         function displayPrice(priceDetails) {
           let priceBreakdown = `
-            Prix de base : ${priceDetails.basePrice}€<br>
-            Supplément pour km supplémentaires (${priceDetails.extraKmPrice / 0.50} km à 0.50€/km) : ${priceDetails.extraKmPrice}€<br>
-            Supplément pour temps supplémentaire (${priceDetails.extraTimePrice} min à 1€/min) : ${priceDetails.extraTimePrice}€<br>
-            Prix arrondi : ${priceDetails.roundedPrice}€
+            <strong>Prix estimé : ${priceDetails.finalPrice}€</strong><br><br>
+            <small>
+              Prix de base : ${priceDetails.basePrice}€<br>
+              Supplément pour km supplémentaires (${(priceDetails.extraKmPrice / 0.80).toFixed(2)} km à 0.80€/km) : ${priceDetails.extraKmPrice.toFixed(2)}€<br>
+              Supplément pour temps supplémentaire (${priceDetails.extraTimePrice.toFixed(2)} min à 1€/min) : ${priceDetails.extraTimePrice.toFixed(2)}€<br>
+              Prix arrondi : ${priceDetails.roundedPrice}€
+            </small>
           `;
         
-          document.getElementById('calculatedPrice').innerHTML = 'Détail du prix :<br>' + priceBreakdown;
+          document.getElementById('calculatedPrice').innerHTML = priceBreakdown;
         }
+
 
         
     </script>
